@@ -1,0 +1,25 @@
+{
+  "name": "MagicCursor",
+  "version": "1.0.0",
+  "authors": [
+    "shin <s2pch.luck@gmail.com>"
+  ],
+  "description": "Get cool cursor effects on the web.",
+  "main": [
+    "./build/MagicCursor.js",
+    "./build/MagicCursor-line.js",
+    "./build/MagicCursor-bezierline.js",
+    "./build/MagicCursor-evernote.js"
+  ],
+  "keywords": [
+    "cursor"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
