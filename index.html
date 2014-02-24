@@ -22,16 +22,7 @@
 				<h4>== Get cool cursor effects on the web ==</h4>
 				<p><small>(C) 2014 Shintaro Seki</small></p>
 			</section>
-			<!--
-			<section>
-				<h2>Outline</h2>
-				<ol>
-					<li>Get Started</li>
-					<li>Custom Options</li>
-					<li>Examples</li>
-				</ol>
-			</section>
-			-->
+			
 			<section>
 				<section>
 					<h2><i class="fa fa-play-circle"></i> Get Started</h2>
@@ -39,7 +30,7 @@
 				<section>
 					<h2>Install</h2>
 					<p>
-						Download <a href="#">here</a> and place the library files ("MagicCursor.js" and "MagicCursor-(ADDON).js") where you like,
+						Download <a href="https://github.com/s-shin/MagicCursor.js/releases">here</a> and place the library files ("MagicCursor.js" and "MagicCursor-(ADDON).js") where you like,
 						<br /><br />
 						or
 						<br /><br />
@@ -69,14 +60,45 @@ body { margin: 0; padding: 0; background-color: #000; }
 					</code></pre>
 				</section>
 				<section>
-					<h2>Options</h2>
+					<h2>Basic Options</h2>
 					<pre><code data-trim class="language-javascript">
 new MagicCursor({
-	target: document.querySelector("#target"),
+	// Target DOM element.
+	target: document.body,
+	// Set true in some full screen applications (ex. reveal.js).
+	fullScreen: false,
+	// CSS z-index of canvas where the cursor is drawed.
+	zIndex: 5000,
+	// FPS of animation
 	fps: 30,
+	// Duration.
 	duration: 1, // [s]
-	easing: function(x, t, b, c, d) { return x * x; }
-}).watch();
+	// jQuery-style easing function.
+	easing: function(x, t, b, c, d) { return x; }, # linear
+});
+					</code></pre>
+				</section>
+				<section>
+					<h2>How to Check <br /> Available Options</h2>
+					<ul>
+						<li>Read the source code.</li>
+						<li>
+							Run the following command on the console.<br />
+							<code>MagicCursor.Options.get("option-name")</code>
+						</li>
+					</li>
+					<pre><code data-trim>
+> MagicCursor.Options.get("default")
+draw: function (ctx, points, head, tail) {
+duration: 1
+easing: function (x, t, b, c, d) {
+fillColor: Array[3]
+fps: 30
+fullScreen: false
+lineColor: Array[3]
+lineWidth: 2.5
+radius: 7
+...
 					</code></pre>
 				</section>
 			</section>
@@ -106,7 +128,7 @@ skeleton =
 	zIndex: 5000
 	# FPS of animation.
 	fps: 30
-	# Duration.
+	# How long each curosr point is showed.
 	duration: 1 # [s]
 	# jQuery-style easing function.
 	# About easing functions: http://www.robertpenner.com/easing/
@@ -128,7 +150,7 @@ skeleton =
 					<pre><code data-trim>
 MagicCursor.Options.add "default",
 	# Custum parameters.
-	# These params can be referenced like `this.param` in `draw()`.
+	# These params can be refered such as `this.param` in `draw()`.
 	fillColor: [100, 100, 255]
 	lineColor: [255, 255, 255]
 	radius: 7
@@ -154,7 +176,7 @@ MagicCursor.Options.add "default",
 					</code></pre>
 				</section>
 				<section>
-					<h2>Use custom options</h2>
+					<h2>Use Custom Options</h2>
 					<pre><code data-trim>
 // Set the option name as first argument.
 new MagicCursor("default"); // is equivalent to `new MagicCursor()` 
@@ -235,14 +257,6 @@ new MagicCursor("line", {fps: 15}).watch();
 						This slide is just an example.
 					</p>
 				</section>
-			</section>
-			
-			<section>
-				<h2><i class="fa fa-info-circle"></i> More Information</h2>
-				<ul>
-					<li><a href="#">API documentation</a></li>
-					<li><a href="#">Source code on Github</a></li>
-				</ul>
 			</section>
 			
 			<section>

@@ -103,13 +103,12 @@ Options = new class OptionsManager
 		zIndex: 5000
 		# FPS of animation.
 		fps: 30
-		# Duration.
+		# How long each curosr points is showed.
 		duration: 1 # [s]
 		# jQuery-style easing function.
 		# About easing functions: http://www.robertpenner.com/easing/
 		easing: (x, t, b, c, d) -> x # linear
 		# Draw function in each frame.
-		#
 		# - ctx: 2d context of canvas.
 		# - points: if head is null then [tail...] else [tail..., head]
 		# - head: The head point. [null|CursorPoint]
@@ -131,7 +130,7 @@ Options = new class OptionsManager
 # on MagicCursor.
 Options.add "default",
 	# Custum parameters.
-	# These params can be referenced like `this.param` in `draw()`.
+	# These params can be refered such as `this.param` in `draw()`.
 	fillColor: [100, 100, 255]
 	lineColor: [255, 255, 255]
 	radius: 7
