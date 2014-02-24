@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<title>Example 2</title>
+<style>
+html, body { height: 100%; width: 100%; }
+body { margin: 0; padding: 0; background-color: #000; text-align: center; color: white; overflow: hidden; }
+p { margin: 1em; }
+p small { color: #8C8; font-size: 0.75em; }
+p small a { color: inherit; }
+</style>
+<body>
+	<p>
+		<label>Color</label>
+		<select class="color">
+			<option>blue</option>
+			<option>red</option>
+			<option>green</option>
+		</select>
+	</p>
+	<p>
+		<label>FPS</label>
+		<select class="fps">
+			<option>15</option>
+			<option>30</option>
+			<option>60</option>
+		</select>
+	</p>
+	<p>
+		<label>Easing function</label>
+		<select class="easing">
+			<option>linear</option>
+			<option>easeInQuad</option>
+			<option>easeOutQuad</option>
+			<option>easeInOutQuad</option>
+			<option>easeInCubic</option>
+			<option>easeOutCubic</option>
+			<option>easeInOutCubic</option>
+			<option>easeInQuart</option>
+			<option>easeOutQuart</option>
+			<option>easeInOutQuart</option>
+			<option>easeInQuint</option>
+			<option>easeOutQuint</option>
+			<option>easeInOutQuint</option>
+		</select>
+		<br />
+		<small>from <a href="https://gist.github.com/gre/1650294">https://gist.github.com/gre/1650294</a></small>
+	</p>
+	<script src="../../build/MagicCursor.js"></script>
+	<script src="../vendor/easing.js"></script>
+	<script src="main.js"></script>
+</body>
+

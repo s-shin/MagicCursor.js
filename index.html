@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<title>MagicCursor.js</title>
+<link rel="stylesheet" href="pages/vendor/reveal/css/reveal.min.css" />
+<link rel="stylesheet" href="pages/vendor/reveal/css/theme/sky.css" />
+<link rel="stylesheet" href="pages/vendor/highlight/styles/xcode.css" />
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+<style>
+.reveal pre code { font-size: 1.2em; }
+.reveal dl { margin: 0.5em 0; }
+.reveal dl dt { font-weight: bold; }
+.reveal dl dd { font-size: 0.9em; margin-bottom: 0.5em; }
+.reveal .fa { font-style: normal; font-family: 'FontAwesome'; }
+</style>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section>
+				<h1>
+					<span style="font-size: 0.75em"><i class="fa fa-magic"></i> MagicCursor.js</span><br />
+				</h1>
+				<h4>== Get cool cursor effects on the web ==</h4>
+				<p><small>(C) 2014 Shintaro Seki</small></p>
+			</section>
+			
+			<section>
+				<section>
+					<h2><i class="fa fa-play-circle"></i> Get Started</h2>
+				</section>
+				<section>
+					<h2>Install</h2>
+					<p>
+						Download <a href="https://github.com/s-shin/MagicCursor.js/releases">here</a> and place the library files ("MagicCursor.js" and "MagicCursor-(ADDON).js") where you like,
+						<br /><br />
+						or
+						<br /><br />
+						via <a href="http://bower.io/">bower</a>.
+					</p>
+					<p>
+						<code data-trim>
+							$ bower install MagicCursor --save
+						</code>
+					</p>
+				</section>
+				<section>
+					<h2>A Simple Example</h2>
+					<pre><code data-trim>
+&lt;!DOCTYPE html&gt;
+&lt;title&gt;A Simple Example&lt;/title&gt;
+&lt;style&gt;
+html, body { height: 100%; width: 100%; }
+body { margin: 0; padding: 0; background-color: #000; }
+&lt;/style&gt;
+&lt;body&gt;
+	&lt;script src=&quot;js/MagicCursor.js&quot;&gt;&lt;/script&gt;
+	&lt;script&gt;
+		new MagicCursor().watch();
+	&lt;/script&gt;
+&lt;/body&gt;
+					</code></pre>
+				</section>
+				<section>
+					<h2>Basic Options</h2>
+					<pre><code data-trim class="language-javascript">
+new MagicCursor({
+	// Target DOM element.
+	target: document.body,
+	// Set true in some full screen applications (ex. reveal.js).
+	fullScreen: false,
+	// CSS z-index of canvas where the cursor is drawed.
+	zIndex: 5000,
+	// FPS of animation
+	fps: 30,
+	// Duration.
+	duration: 1, // [s]
+	// jQuery-style easing function.
+	easing: function(x, t, b, c, d) { return x; }, # linear
+});
+					</code></pre>
+				</section>
+				<section>
+					<h2>How to Check <br /> Available Options</h2>
+					<ul>
+						<li>Read the source code.</li>
+						<li>
+							Run the following command on the console.<br />
+							<code>MagicCursor.Options.get("option-name")</code>
+						</li>
+					</li>
+					<pre><code data-trim>
+> MagicCursor.Options.get("default")
+draw: function (ctx, points, head, tail) {
+duration: 1
+easing: function (x, t, b, c, d) {
+fillColor: Array[3]
+fps: 30
+fullScreen: false
+lineColor: Array[3]
+lineWidth: 2.5
+radius: 7
+...
+					</code></pre>
+				</section>
+			</section>
+			
+			<section>
+				<section>
+					<h2><i class="fa fa-cogs"></i> Custom Options</h2>
+				</section>
+				<section>
+					<h2>Built-in Options</h2>
+					<ol>
+						<li>skeleton</li>
+						<li>default</li>
+					</ol>
+				</section>
+				<section>
+					<h2>"skeleton" Option</h2>
+					<p>Base option of all custom options.</p>
+					<pre><code data-trim>
+# Base options
+skeleton = 
+	# Target DOM element.
+	target: document.body
+	# Set true in some full screen applications (ex. reveal.js).
+	fullScreen: false
+	# CSS z-index of canvas where the cursor is drawed.
+	zIndex: 5000
+	# FPS of animation.
+	fps: 30
+	# How long each curosr point is showed.
+	duration: 1 # [s]
+	# jQuery-style easing function.
+	# About easing functions: http://www.robertpenner.com/easing/
+	easing: (x, t, b, c, d) -> x # linear
+	# Draw function in each frame.
+	# - ctx: 2d context of canvas.
+	# - points: if `head` isn't null then [tail..., head] else [tail...]
+	# - head: The head point. [null|CursorPoint]
+	# - tail: The tail points, [Array]
+	draw: (ctx, points, head, tail) -> console.log "override me"
+					</code></pre>
+				</section>
+				<section>
+					<h2>"default" Option</h2>
+					<p>
+						Default option of MagicCursor.<br />
+						It's implemented as one of custom options.
+					</p>
+					<pre><code data-trim>
+MagicCursor.Options.add "default",
+	# Custum parameters.
+	# These params can be refered such as `this.param` in `draw()`.
+	fillColor: [100, 100, 255]
+	lineColor: [255, 255, 255]
+	radius: 7
+	lineWidth: 2.5
+	# Override draw().
+	draw: (ctx, points, head, tail) ->
+		drawRadius = (p, radius, lineWidth, frgba, srgba) ->
+			ctx.beginPath()
+			ctx.lineWidth = lineWidth
+			ctx.strokeStyle = "rgba(#{srgba.join(',')})"
+			ctx.fillStyle = "rgba(#{frgba.join(',')})"
+			ctx.arc p.x, p.y, radius, 0, Math.PI * 2
+			ctx.fill()
+			ctx.stroke()
+		for p in tail
+			t = 1 - p.param
+			t = 0 if t < 0
+			drawRadius p, @radius*t, @lineWidth*t, \
+				@fillColor.concat([t]), @lineColor.concat([t])
+		if head
+			drawRadius head, @radius, @lineWidth, \
+				@fillColor.concat([1]), @lineColor.concat([1])
+					</code></pre>
+				</section>
+				<section>
+					<h2>Use Custom Options</h2>
+					<pre><code data-trim>
+// Set the option name as first argument.
+new MagicCursor("default"); // is equivalent to `new MagicCursor()` 
+
+// Override some options
+new MagicCursor("default", {
+	fps: 15,
+	duration: 2,
+	fillColor: [255, 100, 100]
+});
+					</code></pre>
+				</section>
+				<section>
+					<h2>Create Custom Options</h2>
+					<pre><code data-trim>
+MagicCursor.Options.add("new-custom-option-name", {
+	// fps, duration, etc. are inherited from the skeleton.
+	customOptionValue: something,
+	draw: function(ctx, points, head, tail) {
+		console.log(this.customOptionValue);
+		/* draw */
+	}
+});
+					</code></pre>
+				</section>
+				<section>
+					<h2>Example</h2>
+					<p>
+						MagicCursor-line.coffee
+						<pre><code data-trim class="language-coffeescript">
+MagicCursor.Options.add "line",
+	fps: 30
+	duration: 0.5
+	color: [255, 255, 255]
+	lineWidth: 2
+	radius: 5
+	draw: (ctx, points, head, tail) ->
+		if tail.length > 0
+			ctx.lineWidth = @lineWidth
+			ctx.strokeStyle = "rgb(#{@color.join(',')})"
+			ctx.beginPath()
+			ctx.lineTo p.x, p.y for p in points
+			ctx.stroke()
+		if head
+			ctx.lineWidth = 0
+			ctx.fillStyle = "rgb(#{@color.join(',')})"
+			ctx.beginPath()
+			ctx.arc head.x, head.y, @radius, 0, Math.PI * 2
+			ctx.fill()
+						</code></pre>
+					</p>
+					<p>
+						<pre><code data-trim>
+new MagicCursor("line", {fps: 15}).watch();
+						</code></pre>
+					</p>
+				</section>
+			</section>
+			
+			<section>
+				<section>
+					<h2><i class="fa fa-flask"></i> Examples</h2>
+				</section>
+				<section class="no-cursor-effect">
+					<h2>Example 1</h2>
+					<iframe src="examples/2/index.html" width="100%" height="500"></iframe>
+					<p><small><a href="examples/2/index.html" target="_blank">open it in another window</a></small></p>
+				</section>
+				<section class="no-cursor-effect">
+					<h2>Example 2</h2>
+					<iframe src="examples/3/index.html" width="100%" height="500"></iframe>
+					<p><small><a href="examples/3/index.html" target="_blank">open it in another window</a></small></p>
+				</section>
+				<section>
+					<h2>Presentation</h2>
+					<p>
+						MagicCursor.js is suitable for presentation.<br />
+						This slide is just an example.
+					</p>
+				</section>
+			</section>
+			
+			<section>
+				<h2>Thanks!</h2>
+				<h4>
+					By Shintaro Seki /
+					<a href="https://github.com/s-shin"><i class="fa fa-github"></i> Github</a> /
+					<a href="http://shin.hateblo.jp/"><i class="fa fa-pencil"></i> Blog</a>
+				</h4>
+			</section>
+		</div>
+	</div>
+	<script src="pages/vendor/reveal/lib/js/head.min.js"></script>
+	<script src="pages/vendor/reveal/js/reveal.js"></script>
+	<script src="pages/vendor/highlight/highlight.pack.js"></script>
+	<script src="build/MagicCursor.js"></script>
+	<script src="build/MagicCursor-evernote.js"></script>
+	<script src="pages/js/index.js"></script>
+</body>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<title>Example 3</title>
+<style>
+html, body { height: 100%; width: 100%; }
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #000;
+	line-height: 1.5;
+	color: white;
+}
+table { height: 100%; width: 100%; }
+table td { width: 50%; height: 50%; text-align: center; }
+td.default { background-color: #333; }
+td.line { background-color: #733; }
+td.bezierline { background-color: #373; }
+td.evernote { background-color: #337; }
+</style>
+<body>
+	<table>
+		<tr>
+			<td class="default">default</td>
+			<td class="line">line</td>
+		</tr>
+		<tr>
+			<td class="evernote">evernote</td>
+			<td class="bezierline">bezierline</td>
+		</tr>
+	</table>
+	<script src="../../build/MagicCursor.js"></script>
+	<script src="../../build/MagicCursor-evernote.js"></script>
+	<script src="../../build/MagicCursor-line.js"></script>
+	<script src="../../build/MagicCursor-bezierline.js"></script>
+	<script src="main.js"></script>
+</body>
+
